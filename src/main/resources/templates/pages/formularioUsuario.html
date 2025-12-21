@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>VetApp | Registro de Usuario</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body class="bg-slate-50 min-h-screen flex flex-col items-center p-6">
+
+<nav class="max-w-xl w-full bg-white/80 backdrop-blur-md sticky top-6 z-50 border border-slate-100 shadow-lg rounded-3xl px-6 py-3 mb-10">
+    <div class="flex justify-between items-center">
+        <div class="flex items-center gap-2">
+            <div class="bg-blue-600 p-2 rounded-xl shadow-md">
+                <i class="fas fa-paw text-white text-sm"></i>
+            </div>
+            <span class="text-slate-800 font-bold tracking-tighter uppercase text-sm">VET-Friendly</span>
+        </div>
+
+        <div class="flex items-center gap-1">
+            <a th:href="@{/}" class="px-4 py-2 text-slate-500 hover:text-blue-600 hover:bg-slate-50 rounded-xl text-xs font-bold uppercase tracking-widest transition-all">
+                Inicio
+            </a>
+            <a th:href="@{/mascotas}" class="px-4 py-2 text-slate-800 bg-slate-100 rounded-xl text-xs font-bold uppercase tracking-widest transition-all">
+                Lista
+            </a>
+        </div>
+    </div>
+</nav>
+
+<div class="max-w-xl w-full bg-white shadow-2xl rounded-[3rem] border border-slate-100 flex flex-col overflow-hidden">
+
+    <div class="bg-slate-800 p-8 text-center">
+        <div class="inline-block p-4 bg-slate-700 rounded-2xl mb-4 rotate-2">
+            <i class="fas fa-user-plus text-3xl text-blue-400"></i>
+        </div>
+        <h2 class="text-2xl font-extralight tracking-[0.3em] text-white uppercase">Nuevo Usuario</h2>
+        <p class="text-slate-400 text-[10px] uppercase tracking-[0.4em] mt-2">Información del Propietario</p>
+    </div>
+
+    <form th:action="@{/guardar-usuario}" method="post" th:object="${usuario}" class="p-8 space-y-6">
+
+        <input type="hidden" th:field="*{id}">
+
+        <div class="space-y-1">
+            <label class="block text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1">Nombre Completo</label>
+            <div class="relative">
+                <i class="fas fa-id-card absolute left-4 top-1/2 -translate-y-1/2 text-slate-300"></i>
+                <input type="text" th:field="*{nombre}"
+                       placeholder=""
+                       class="w-full pl-11 pr-4 py-3 bg-slate-50 border border-slate-200 rounded-2xl focus:ring-4 focus:ring-blue-500/10 focus:border-blue-500 outline-none transition-all text-sm">
+            </div>
+            <p class="text-[10px] text-rose-500 font-bold uppercase mt-1 ml-1" th:if="${#fields.hasErrors('nombre')}" th:errors="*{nombre}"></p>
+        </div>
+
+        <div class="space-y-1">
+            <label class="block text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1">Cédula de Identidad</label>
+            <div class="relative">
+                <i class="fas fa-fingerprint absolute left-4 top-1/2 -translate-y-1/2 text-slate-300"></i>
+                <input type="text" th:field="*{cedula}"
+                       placeholder="10 digitos"
+                       class="w-full pl-11 pr-4 py-3 bg-slate-50 border border-slate-200 rounded-2xl focus:ring-4 focus:ring-blue-500/10 focus:border-blue-500 outline-none transition-all text-sm">
+            </div>
+            <p class="text-[10px] text-rose-500 font-bold uppercase mt-1 ml-1" th:if="${#fields.hasErrors('cedula')}" th:errors="*{cedula}"></p>
+        </div>
+
+        <div class="space-y-1">
+            <label class="block text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1">Correo Electrónico</label>
+            <div class="relative">
+                <i class="fas fa-envelope absolute left-4 top-1/2 -translate-y-1/2 text-slate-300"></i>
+                <input type="email" th:field="*{email}"
+                       placeholder="TuUsuario@correo.com"
+                       class="w-full pl-11 pr-4 py-3 bg-slate-50 border border-slate-200 rounded-2xl focus:ring-4 focus:ring-blue-500/10 focus:border-blue-500 outline-none transition-all text-sm">
+            </div>
+            <p class="text-[10px] text-rose-500 font-bold uppercase mt-1 ml-1" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></p>
+        </div>
+
+        <button type="submit"
+                class="w-full py-4 bg-blue-600 hover:bg-blue-700 text-white rounded-2xl font-bold uppercase text-xs tracking-[0.3em] shadow-xl shadow-blue-100 transition-all active:scale-[0.98] mt-4">
+            Registrar Propietario
+        </button>
+    </form>
+
+    <footer class="bg-slate-50/80 border-t border-slate-100 px-10 py-8">
+        <div class="flex justify-between items-center text-slate-400">
+            <div class="text-left">
+                <p class="text-slate-800 text-[10px] font-bold tracking-tighter uppercase">VetFriendly</p>
+                <p class="text-[10px] uppercase tracking-widest">&copy; 2025 Gestion de Datos</p>
+            </div>
+            <div class="flex gap-4">
+                <i class="fab fa-facebook-f text-xs"></i>
+                <i class="fab fa-instagram text-xs"></i>
+            </div>
+        </div>
+    </footer>
+</div>
+</body>
+</html>
