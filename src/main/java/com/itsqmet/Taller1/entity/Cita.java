@@ -12,16 +12,14 @@ public class Cita {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String fecha;
-    private String hora;
+    private String fecha; // Guardará algo como "2025-12-30"
+    private String hora;  // Guardará algo como "14:30"
     private String motivo;
 
-    // Relación: Muchas Citas pertenecen a una Mascota
     @ManyToOne
     @JoinColumn(name = "mascota_id")
     private Mascota mascota;
 
-    // Relación: Muchas Citas son atendidas por un Veterinario
     @ManyToOne
     @JoinColumn(name = "veterinario_id")
     private Veterinario veterinario;

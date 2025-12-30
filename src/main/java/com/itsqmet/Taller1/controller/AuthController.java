@@ -1,9 +1,8 @@
 package com.itsqmet.Taller1.controller;
 
 import com.itsqmet.Taller1.entity.Usuario;
-import com.itsqmet.Taller1.repository.UsuarioRepository;
+import com.itsqmet.Taller1.service.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,18 +13,13 @@ import org.springframework.web.bind.annotation.PostMapping;
 public class AuthController {
 
     @Autowired
-    private UsuarioRepository usuarioRepository;
+    private UsuarioService usuarioService;
 
-    @Autowired
-    private BCryptPasswordEncoder passwordEncoder;
-
-    // Ruta actualizada: apunta a templates/auth/login.html
     @GetMapping("/login")
     public String login() {
         return "auth/login";
     }
 
-    // Ruta actualizada: apunta a templates/auth/registro.html
     @GetMapping("/registro")
     public String registroForm(Model model) {
         model.addAttribute("usuario", new Usuario());
@@ -34,9 +28,7 @@ public class AuthController {
 
     @PostMapping("/registro")
     public String registrarUsuario(@ModelAttribute Usuario usuario) {
-        usuario.setPassword(passwordEncoder.encode(usuario.getPassword()));
-        usuario.setRol("ROLE_ADMIN");
-        usuarioRepository.save(usuario);
+        usuarioService.registrar(usuario);
         return "redirect:/login?success";
     }
 }

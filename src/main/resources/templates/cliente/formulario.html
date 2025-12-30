@@ -1,8 +1,7 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>TechPro Vets | Gestionar Cliente</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
@@ -24,31 +23,32 @@
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div>
                 <label class="block text-xs font-semibold uppercase tracking-wider text-blue-400 mb-2 ml-1">Nombre</label>
-                <input type="text" th:field="*{nombre}" required
-                       class="w-full bg-[#0f172a] border border-slate-700 rounded-xl px-4 py-3 focus:border-blue-500 transition-all">
+                <input type="text" th:field="*{nombre}" required placeholder="Ej: Juan"
+                       class="w-full bg-[#0f172a] border border-slate-700 rounded-xl px-4 py-3 text-white focus:border-blue-500 focus:ring-1 focus:ring-blue-500 outline-none transition-all">
             </div>
             <div>
                 <label class="block text-xs font-semibold uppercase tracking-wider text-blue-400 mb-2 ml-1">Apellido</label>
-                <input type="text" th:field="*{apellido}" required
-                       class="w-full bg-[#0f172a] border border-slate-700 rounded-xl px-4 py-3 focus:border-blue-500 transition-all">
+                <input type="text" th:field="*{apellido}" required placeholder="Ej: Pérez"
+                       class="w-full bg-[#0f172a] border border-slate-700 rounded-xl px-4 py-3 text-white focus:border-blue-500 focus:ring-1 focus:ring-blue-500 outline-none transition-all">
             </div>
         </div>
 
         <div>
-            <label class="block text-xs font-semibold uppercase tracking-wider text-blue-400 mb-2 ml-1">Cédula</label>
-            <input type="text" th:field="*{cedula}" required
-                   class="w-full bg-[#0f172a] border border-slate-700 rounded-xl px-4 py-3 focus:border-blue-500 transition-all">
+            <label class="block text-xs font-semibold uppercase tracking-wider text-blue-400 mb-2 ml-1">Cédula / DNI</label>
+            <input type="text" th:field="*{cedula}" required placeholder="Identificación oficial"
+                   class="w-full bg-[#0f172a] border border-slate-700 rounded-xl px-4 py-3 text-white focus:border-blue-500 focus:ring-1 focus:ring-blue-500 outline-none transition-all">
         </div>
 
         <div class="pt-6 flex flex-col md:flex-row gap-4">
-            <button type="submit" class="flex-1 bg-blue-600 hover:bg-blue-500 text-white font-bold py-3.5 rounded-xl transition-all">
-                Confirmar Registro
+            <button type="submit" class="flex-1 bg-blue-600 hover:bg-blue-500 text-white font-bold py-3.5 rounded-xl transition-all shadow-lg shadow-blue-600/20">
+                <i class="fas fa-save mr-2"></i> Confirmar Registro
             </button>
-            <a th:href="@{/clientes}" class="px-8 py-3.5 bg-slate-800 text-slate-300 font-bold rounded-xl text-center">
-                Volver
+            <a th:href="@{/clientes}" class="px-8 py-3.5 bg-slate-800 hover:bg-slate-700 text-slate-300 font-bold rounded-xl text-center transition-all">
+                Cancelar
             </a>
         </div>
     </form>
 </div>
+
 </body>
 </html>

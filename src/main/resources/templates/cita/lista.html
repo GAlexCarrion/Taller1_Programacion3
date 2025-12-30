@@ -2,80 +2,100 @@
 <html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8">
-    <title>Pro Vets | Consultas</title>
+    <title>TechPro Vets | Listado de Citas</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
-<body class="bg-[#0f172a] text-slate-200 min-h-screen p-6 md:p-12">
+<body class="bg-[#0f172a] text-slate-200 min-h-screen p-4 md:p-8">
 
-<div class="container mx-auto">
-    <div class="flex justify-end mb-6 items-center gap-4 text-sm">
-            <span class="text-slate-400 italic">
-                Bienvenido, <span class="text-orange-400 font-bold" sec:authentication="name">Usuario</span>
-            </span>
-        <form th:action="@{/logout}" method="post">
-            <button type="submit" class="bg-red-500/10 hover:bg-red-500/20 text-red-400 border border-red-500/30 px-3 py-1 rounded-lg transition-all text-xs">
-                <i class="fas fa-power-off mr-1"></i> Cerrar Sesión
-            </button>
-        </form>
-    </div>
-
-    <div class="flex flex-col md:flex-row justify-between items-center mb-10 gap-4">
+<div class="max-w-6xl mx-auto">
+    <div class="flex flex-col md:flex-row justify-between items-center mb-8 gap-4">
         <div>
-            <h1 class="text-4xl font-extrabold text-white tracking-tight">Registro de <span class="text-orange-500">Consultas</span></h1>
-            <p class="text-slate-400 mt-1">Control cronológico de atenciones médicas.</p>
+            <h1 class="text-3xl font-bold text-white tracking-tight">Agenda Médica</h1>
+            <p class="text-slate-400">Gestión de citas y especialistas</p>
         </div>
-        <a th:href="@{/citas/nuevo}" class="bg-orange-500 hover:bg-orange-600 text-white font-bold py-2 px-6 rounded-xl transition-all shadow-lg shadow-orange-500/20">
-            <i class="fas fa-plus mr-2"></i> Nueva Cita
+        <a th:href="@{/citas/nuevo}"
+           class="bg-orange-600 hover:bg-orange-500 text-white font-bold py-3 px-6 rounded-xl transition-all shadow-lg shadow-orange-500/20 flex items-center">
+            <i class="fas fa-plus mr-2"></i> Agendar Nueva Cita
         </a>
     </div>
 
-    <div class="bg-slate-800/50 border border-slate-700 rounded-2xl overflow-hidden backdrop-blur-sm">
-        <table class="w-full text-left border-collapse">
-            <thead>
-            <tr class="bg-slate-700/50">
-                <th class="p-4 font-bold text-orange-400">ID</th>
-                <th class="p-4 font-bold text-orange-400">Fecha y Hora</th>
-                <th class="p-4 font-bold text-orange-400">Mascota</th>
-                <th class="p-4 font-bold text-orange-400">Veterinario</th>
-                <th class="p-4 font-bold text-orange-400">Motivo</th>
-                <th class="p-4 font-bold text-orange-400">Acciones</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr th:each="cita : ${citas}" class="border-t border-slate-700 hover:bg-slate-700/30 transition-colors">
-                <td class="p-4" th:text="${cita.id}">1</td>
-                <td class="p-4" th:text="${#temporals.format(cita.fechaHora, 'dd/MM/yyyy HH:mm')}">01/01/2025</td>
-                <td class="p-4">
-                    <span class="font-bold text-white" th:text="${cita.mascota.nombre}">Fido</span>
-                </td>
-                <td class="p-4" th:text="${cita.veterinario.nombre}">Dr. Pérez</td>
-                <td class="p-4 text-slate-400" th:text="${cita.motivo}">Chequeo general</td>
-                <td class="p-4">
-                    <div class="flex gap-2">
-                        <a th:href="@{/citas/editar/{id}(id=${cita.id})}" class="text-blue-400 hover:text-blue-300 transition-colors">
-                            <i class="fas fa-edit"></i>
-                        </a>
-                        <a th:href="@{/citas/eliminar/{id}(id=${cita.id})}"
-                           class="text-red-400 hover:text-red-300 transition-colors"
-                           onclick="return confirm('¿Estás seguro de eliminar esta cita?')">
-                            <i class="fas fa-trash"></i>
-                        </a>
-                    </div>
-                </td>
-            </tr>
-            <tr th:if="${#lists.isEmpty(citas)}">
-                <td colspan="6" class="p-10 text-center text-slate-500 italic">
-                    No hay consultas programadas actualmente.
-                </td>
-            </tr>
-            </tbody>
-        </table>
+    <div class="bg-[#1e293b] rounded-3xl shadow-2xl border border-slate-800 overflow-hidden">
+        <div class="overflow-x-auto">
+            <table class="w-full text-left border-collapse">
+                <thead>
+                <tr class="bg-slate-800/50 text-orange-400 text-xs uppercase tracking-widest">
+                    <th class="p-4 font-semibold">ID</th>
+                    <th class="p-4 font-semibold">Fecha y Hora</th>
+                    <th class="p-4 font-semibold">Paciente (Mascota)</th>
+                    <th class="p-4 font-semibold">Veterinario</th>
+                    <th class="p-4 font-semibold">Motivo</th>
+                    <th class="p-4 font-semibold text-center">Acciones</th>
+                </tr>
+                </thead>
+                <tbody class="divide-y divide-slate-800">
+                <tr th:each="cita : ${citas}" class="hover:bg-slate-700/30 transition-colors">
+                    <td class="p-4 font-mono text-slate-500" th:text="${cita.id}">1</td>
+
+                    <td class="p-4">
+                        <div class="flex flex-col">
+                            <span class="text-white font-medium" th:text="${cita.fecha}">01/01/2025</span>
+                            <span class="text-orange-400 text-sm font-mono" th:text="${cita.hora}">10:00</span>
+                        </div>
+                    </td>
+
+                    <td class="p-4">
+                        <div class="flex items-center">
+                            <div class="w-8 h-8 rounded-full bg-green-500/10 flex items-center justify-center mr-3 text-green-500">
+                                <i class="fas fa-paw text-xs"></i>
+                            </div>
+                            <span class="font-bold text-slate-200"
+                                  th:text="${cita.mascota != null ? cita.mascota.nombre : 'Sin Mascota'}">Fido</span>
+                        </div>
+                    </td>
+
+                    <td class="p-4 text-slate-300">
+                        <i class="fas fa-user-md mr-2 text-purple-400"></i>
+                        <span th:text="${cita.veterinario != null ? 'Dr/a. ' + cita.veterinario.nombre : 'Sin Asignar'}">Dr. Pérez</span>
+                    </td>
+
+                    <td class="p-4">
+                        <p class="text-slate-400 text-sm truncate max-w-[200px]" th:text="${cita.motivo}">Chequeo general</p>
+                    </td>
+
+                    <td class="p-4">
+                        <div class="flex justify-center gap-3">
+                            <a th:href="@{/citas/editar/{id}(id=${cita.id})}"
+                               class="p-2 bg-blue-500/10 text-blue-400 hover:bg-blue-500 hover:text-white rounded-lg transition-all"
+                               title="Editar Cita">
+                                <i class="fas fa-edit"></i>
+                            </a>
+
+                            <a sec:authorize="hasRole('ADMIN')"
+                               th:href="@{/citas/eliminar/{id}(id=${cita.id})}"
+                               class="p-2 bg-red-500/10 text-red-400 hover:bg-red-500 hover:text-white rounded-lg transition-all"
+                               onclick="return confirm('¿Estás seguro de eliminar esta cita?')"
+                               title="Eliminar Cita">
+                                <i class="fas fa-trash"></i>
+                            </a>
+                        </div>
+                    </td>
+                </tr>
+
+                <tr th:if="${#lists.isEmpty(citas)}">
+                    <td colspan="6" class="p-12 text-center text-slate-500">
+                        <i class="fas fa-calendar-times text-4xl mb-4 block"></i>
+                        No hay citas programadas en el sistema.
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
     </div>
 
     <div class="mt-8">
-        <a th:href="@{/}" class="text-slate-400 hover:text-white transition-colors flex items-center gap-2">
-            <i class="fas fa-arrow-left"></i> Volver al Dashboard
+        <a th:href="@{/}" class="text-slate-500 hover:text-white transition-colors flex items-center">
+            <i class="fas fa-arrow-left mr-2"></i> Volver al panel principal
         </a>
     </div>
 </div>

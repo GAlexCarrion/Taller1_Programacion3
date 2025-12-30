@@ -9,7 +9,7 @@
 <body class="bg-[#0f172a] text-slate-200 min-h-screen p-6 md:p-12">
 
 <div class="container mx-auto">
-    <div class="flex justify-end mb-6 items-center gap-4 text-sm">
+    <div class="flex justify-end mb-6 items-center gap-4 text-sm bg-[#1e293b]/50 p-3 rounded-2xl border border-slate-800">
         <span class="text-slate-400">Sesión de: <span class="text-blue-400 font-bold" sec:authentication="name">Usuario</span></span>
         <form th:action="@{/logout}" method="post">
             <button type="submit" class="bg-red-500/10 hover:bg-red-500/20 text-red-400 border border-red-500/30 px-3 py-1 rounded-lg transition-all text-xs flex items-center gap-2">
@@ -24,12 +24,44 @@
             <p class="text-slate-400 mt-1">Gestione la base de datos de propietarios registrados.</p>
         </div>
         <div class="flex gap-3">
-            <a th:href="@{/}" class="px-5 py-2.5 bg-slate-800 hover:bg-slate-700 rounded-xl font-medium transition-all flex items-center">
-                <i class="fas fa-home mr-2"></i> Inicio
+            <a th:href="@{/}" class="px-5 py-2.5 bg-slate-800 hover:bg-slate-700 rounded-xl font-medium transition-all flex items-center border border-slate-700">
+                <i class="fas fa-home mr-2 text-blue-400"></i> Inicio
             </a>
-            <a th:href="@{/cliente/nuevo}" class="px-5 py-2.5 bg-blue-600 hover:bg-blue-500 text-white rounded-xl font-bold shadow-lg shadow-blue-500/20 transition-all flex items-center">
+            <a th:href="@{/clientes/nuevo}" class="px-5 py-2.5 bg-blue-600 hover:bg-blue-500 text-white rounded-xl font-bold shadow-lg shadow-blue-500/20 transition-all flex items-center">
                 <i class="fas fa-plus mr-2"></i> Nuevo Cliente
             </a>
         </div>
     </div>
+
+    <div class="bg-[#1e293b] rounded-3xl overflow-hidden shadow-2xl border border-slate-800">
+        <table class="w-full text-left border-collapse">
+            <thead class="bg-slate-800/50 text-blue-400">
+            <tr>
+                <th class="px-6 py-4 text-xs font-bold uppercase tracking-wider">Nombre Completo</th>
+                <th class="px-6 py-4 text-xs font-bold uppercase tracking-wider">Cédula / ID</th>
+                <th class="px-6 py-4 text-xs font-bold uppercase tracking-wider text-center">Acciones</th>
+            </tr>
+            </thead>
+            <tbody class="divide-y divide-slate-800">
+            <tr th:each="c : ${clientes}" class="hover:bg-blue-500/5 transition-colors">
+                <td class="px-6 py-4">
+                    <span class="font-bold text-white" th:text="${c.nombre} + ' ' + ${c.apellido}">Nombre</span>
+                </td>
+                <td class="px-6 py-4 text-slate-400 font-mono" th:text="${c.cedula}">0000000000</td>
+                <td class="px-6 py-4">
+                    <div class="flex justify-center gap-2">
+                        <a th:href="@{/clientes/editar/{id}(id=${c.id})}" class="p-2 bg-amber-500/10 text-amber-500 hover:bg-amber-500 hover:text-white rounded-lg transition-all">
+                            <i class="fas fa-edit"></i>
+                        </a>
+                        <a th:href="@{/clientes/eliminar/{id}(id=${c.id})}" onclick="return confirm('¿Eliminar cliente?')" class="p-2 bg-red-500/10 text-red-500 hover:bg-red-500 hover:text-white rounded-lg transition-all">
+                            <i class="fas fa-trash"></i>
+                        </a>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
 </div>
+</body>
+</html>

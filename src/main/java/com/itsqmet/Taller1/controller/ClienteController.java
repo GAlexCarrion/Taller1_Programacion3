@@ -16,12 +16,14 @@ public class ClienteController {
 
     @GetMapping
     public String listarClientes(Model model) {
+
         model.addAttribute("clientes", clienteService.listarClientes());
         return "cliente/lista";
     }
 
     @GetMapping("/nuevo")
     public String formularioCliente(Model model) {
+        // "cliente" debe coincidir con el th:object="${cliente}" en formulario.html
         model.addAttribute("cliente", new Cliente());
         return "cliente/formulario";
     }

@@ -1,6 +1,5 @@
 package com.itsqmet.Taller1.entity;
 
-
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -16,7 +15,7 @@ public class Usuario {
     private String username;
 
     @Column(nullable = false)
-    private String password; // Se guardará encriptada con BCrypt
+    private String password;
 
-    private String rol; // Ejemplo: "ADMIN"
+    private String rol; // Guardaremos admin o user
 }

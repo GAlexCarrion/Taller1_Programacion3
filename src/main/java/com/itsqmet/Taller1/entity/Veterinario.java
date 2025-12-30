@@ -15,11 +15,11 @@ public class Veterinario {
 
     private String nombre;
     private String apellido;
-    private String especialidad; // Ej: Cirugía, Dermatología, General
-    private String licencia;     // Número de registro profesional
+    private String especialidad;
+    private String licencia;
     private String telefono;
 
-    // Relación: Un Veterinario atiende muchas Citas
+    // Relacion: Un Veterinario atiende muchas Citas
     @OneToMany(mappedBy = "veterinario", cascade = CascadeType.ALL)
     private List<Cita> citas;
 }

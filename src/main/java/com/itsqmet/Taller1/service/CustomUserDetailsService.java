@@ -1,6 +1,5 @@
 package com.itsqmet.Taller1.service;
 
-
 import com.itsqmet.Taller1.entity.Usuario;
 import com.itsqmet.Taller1.repository.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,9 +17,15 @@ public class CustomUserDetailsService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         Usuario usuario = usuarioRepository.findByUsername(username)
-                .orElseThrow(() -> new UsernameNotFoundException("Usuario no encontrado"));
+                .orElseThrow(() -> new UsernameNotFoundException("Usuario no encontrado: " + username));
 
-        return new User(usuario.getUsername(), usuario.getPassword(),
-                Collections.singletonList(new SimpleGrantedAuthority(usuario.getRol())));
+        // Importante: Agregamos "ROLE_" antes del rol guardado en la base
+        String nombreRol = "ROLE_" + usuario.getRol();
+
+        return new User(
+                usuario.getUsername(),
+                usuario.getPassword(),
+                Collections.singletonList(new SimpleGrantedAuthority(nombreRol))
+        );
     }
 }

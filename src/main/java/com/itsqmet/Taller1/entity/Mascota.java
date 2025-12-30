@@ -17,10 +17,9 @@ public class Mascota {
     private String raza;
     private int edad;
 
-    // Relación: Muchas Mascotas pertenecen a un Cliente (Dueño)
+    // Relacion: Muchas Mascotas pertenecen a un Cliente
     @ManyToOne
-    @JoinColumn(name = "cliente_id") // Cambiado para evitar la ñ
+    @JoinColumn(name = "cliente_id")
     private Cliente cliente;
 
-    // Nota: Asegúrate de tener creada la clase Cliente.java
 }

@@ -19,8 +19,7 @@ public class Cliente {
     private String telefono;
     private String correo;
 
-    // Relación: Un Cliente tiene muchas Mascotas
-    // mappedBy debe coincidir con el nombre del atributo en la clase Mascota
+    // Relación: Un Cliente tiene muchas mascotas
     @OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL)
     private List<Mascota> mascotas;
 }
