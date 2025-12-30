@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>TechPro Vets | Gestionar Mascota</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body class="bg-[#0f172a] text-slate-200 min-h-screen flex items-center justify-center p-4">
+
+<div class="max-w-xl w-full bg-[#1e293b] rounded-3xl shadow-2xl border border-green-500/10 p-8 md:p-10">
+    <div class="text-center mb-10">
+        <div class="inline-flex items-center justify-center w-16 h-16 bg-green-500/10 rounded-2xl mb-4 border border-green-500/20">
+            <i class="fas fa-paw text-3xl text-green-400"></i>
+        </div>
+        <h2 class="text-3xl font-bold text-white tracking-tight">Expediente del Paciente</h2>
+        <p class="text-slate-400 mt-2">Ingrese los datos clínicos de la mascota</p>
+    </div>
+
+    <form th:action="@{/mascotas/guardar}" th:object="${mascota}" method="post" class="space-y-6">
+        <input type="hidden" th:field="*{id}">
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div>
+                <label class="block text-xs font-semibold uppercase tracking-wider text-green-400 mb-2 ml-1">Nombre Mascota</label>
+                <input type="text" th:field="*{nombre}" required placeholder="Ej: Firulais"
+                       class="w-full bg-[#0f172a] border border-slate-700 rounded-xl px-4 py-3 focus:outline-none focus:border-green-500 focus:ring-1 focus:ring-green-500 transition-all">
+            </div>
+            <div>
+                <label class="block text-xs font-semibold uppercase tracking-wider text-green-400 mb-2 ml-1">Especie</label>
+                <input type="text" th:field="*{especie}" required placeholder="Canino, Felino..."
+                       class="w-full bg-[#0f172a] border border-slate-700 rounded-xl px-4 py-3 focus:outline-none focus:border-green-500 focus:ring-1 focus:ring-green-500 transition-all">
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div>
+                <label class="block text-xs font-semibold uppercase tracking-wider text-green-400 mb-2 ml-1">Raza</label>
+                <input type="text" th:field="*{raza}" placeholder="Ej: Golden Retriever"
+                       class="w-full bg-[#0f172a] border border-slate-700 rounded-xl px-4 py-3 focus:outline-none focus:border-green-500 transition-all">
+            </div>
+            <div>
+                <label class="block text-xs font-semibold uppercase tracking-wider text-green-400 mb-2 ml-1">Edad (Años)</label>
+                <input type="number" th:field="*{edad}" min="0"
+                       class="w-full bg-[#0f172a] border border-slate-700 rounded-xl px-4 py-3 focus:outline-none focus:border-green-500 transition-all">
+            </div>
+        </div>
+
+        <div>
+            <label class="block text-xs font-semibold uppercase tracking-wider text-blue-400 mb-2 ml-1">Dueño / Responsable</label>
+            <select th:field="*{cliente}" required
+                    class="w-full bg-[#0f172a] border border-slate-700 rounded-xl px-4 py-3 focus:outline-none focus:border-blue-500 transition-all appearance-none cursor-pointer">
+                <option value="" class="text-slate-500">-- Seleccione un propietario --</option>
+                <option th:each="c : ${clientes}"
+                        th:value="${c.id}"
+                        th:text="${c.nombre} + ' ' + ${c.apellido} + ' (' + ${c.cedula} + ')' ">
+                </option>
+            </select>
+        </div>
+
+        <div class="pt-6 flex flex-col md:flex-row gap-4">
+            <button type="submit"
+                    class="flex-1 bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-500 hover:to-emerald-500 text-white font-bold py-3.5 rounded-xl shadow-lg shadow-green-500/20 transition-all active:scale-95">
+                <i class="fas fa-save mr-2"></i> Registrar Mascota
+            </button>
+            <a th:href="@{/mascotas}"
+               class="px-8 py-3.5 bg-slate-800 hover:bg-slate-600 text-slate-300 font-bold rounded-xl text-center transition-all">
+                Volver
+            </a>
+        </div>
+    </form>
+</div>
+</body>
+</html>

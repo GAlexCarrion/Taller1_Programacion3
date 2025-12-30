@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>TechPro Vets | Acceso al Sistema</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body class="bg-[#0f172a] text-slate-200 min-h-screen flex items-center justify-center p-4">
+
+<div class="w-full max-w-md">
+    <div class="text-center mb-8">
+        <div class="inline-flex items-center justify-center w-20 h-20 bg-blue-600/10 rounded-3xl border border-blue-500/20 mb-4 shadow-xl shadow-blue-500/5">
+            <i class="fas fa-shield-dog text-4xl text-blue-500"></i>
+        </div>
+        <h1 class="text-3xl font-extrabold text-white tracking-tight">TechPro <span class="text-blue-500">Vets</span></h1>
+        <p class="text-slate-400 mt-2">Gestión Médica Veterinaria de Alta Precisión</p>
+    </div>
+
+    <div class="bg-[#1e293b] p-8 rounded-3xl shadow-2xl border border-slate-800 backdrop-blur-sm">
+        <h2 class="text-xl font-bold mb-6 text-white flex items-center gap-2">
+            <i class="fas fa-lock text-blue-500 text-sm"></i> Iniciar Sesión
+        </h2>
+
+        <div th:if="${param.error}" class="bg-red-500/10 border border-red-500/50 text-red-400 p-4 rounded-xl mb-6 text-sm flex items-center gap-3">
+            <i class="fas fa-exclamation-circle"></i>
+            <span>Usuario o contraseña incorrectos.</span>
+        </div>
+
+        <div th:if="${param.logout}" class="bg-blue-500/10 border border-blue-500/50 text-blue-400 p-4 rounded-xl mb-6 text-sm flex items-center gap-3">
+            <i class="fas fa-info-circle"></i>
+            <span>Sesión cerrada correctamente.</span>
+        </div>
+
+        <div th:if="${param.success}" class="bg-green-500/10 border border-green-500/50 text-green-400 p-4 rounded-xl mb-6 text-sm flex items-center gap-3">
+            <i class="fas fa-check-circle"></i>
+            <span>¡Cuenta creada! Ya puedes ingresar.</span>
+        </div>
+
+        <form th:action="@{/login}" method="post" class="space-y-5">
+            <div>
+                <label class="block text-xs font-bold uppercase tracking-wider text-slate-500 mb-2 ml-1">Usuario del Sistema</label>
+                <div class="relative">
+                    <span class="absolute inset-y-0 left-0 flex items-center pl-3.5 text-slate-500">
+                        <i class="fas fa-user text-xs"></i>
+                    </span>
+                    <input type="text" name="username"
+                           class="w-full pl-10 pr-4 py-3 rounded-xl bg-slate-900/50 border border-slate-700 text-white placeholder-slate-600 focus:border-blue-500 focus:ring-1 focus:ring-blue-500 outline-none transition-all"
+                           placeholder="nombre.usuario" required>
+                </div>
+            </div>
+
+            <div>
+                <label class="block text-xs font-bold uppercase tracking-wider text-slate-500 mb-2 ml-1">Contraseña</label>
+                <div class="relative">
+                    <span class="absolute inset-y-0 left-0 flex items-center pl-3.5 text-slate-500">
+                        <i class="fas fa-key text-xs"></i>
+                    </span>
+                    <input type="password" name="password"
+                           class="w-full pl-10 pr-4 py-3 rounded-xl bg-slate-900/50 border border-slate-700 text-white placeholder-slate-600 focus:border-blue-500 focus:ring-1 focus:ring-blue-500 outline-none transition-all"
+                           placeholder="••••••••" required>
+                </div>
+            </div>
+
+            <button type="submit" class="w-full bg-blue-600 hover:bg-blue-500 text-white font-bold py-3.5 rounded-xl shadow-lg shadow-blue-600/20 transition-all active:scale-[0.98] flex items-center justify-center gap-2">
+                Ingresar al Panel <i class="fas fa-arrow-right text-xs"></i>
+            </button>
+        </form>
+
+        <div class="mt-8 pt-6 border-t border-slate-800 text-center">
+            <p class="text-sm text-slate-500">
+                ¿Nuevo en el staff médico?
+                <a th:href="@{/registro}" class="text-blue-400 hover:text-blue-300 font-bold ml-1 transition-colors underline underline-offset-4 decoration-blue-500/30">
+                    Crear cuenta
+                </a>
+            </p>
+        </div>
+    </div>
+
+    <p class="text-center mt-8 text-slate-600 text-xs">
+        &copy; 2025 TechPro Vets System. Todos los derechos reservados.
+    </p>
+</div>
+
+</body>
+</html>

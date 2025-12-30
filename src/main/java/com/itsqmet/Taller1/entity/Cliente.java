@@ -8,18 +8,19 @@ import java.util.List;
 @Entity
 @Data
 @NoArgsConstructor
-public class Veterinario {
+public class Cliente {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private String nombre;
     private String apellido;
-    private String especialidad; // Ej: Cirugía, Dermatología, General
-    private String licencia;     // Número de registro profesional
+    private String cedula;
     private String telefono;
+    private String correo;
 
-    // Relación: Un Veterinario atiende muchas Citas
-    @OneToMany(mappedBy = "veterinario", cascade = CascadeType.ALL)
-    private List<Cita> citas;
+    // Relación: Un Cliente tiene muchas Mascotas
+    // mappedBy debe coincidir con el nombre del atributo en la clase Mascota
+    @OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL)
+    private List<Mascota> mascotas;
 }

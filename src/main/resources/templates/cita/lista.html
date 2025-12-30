@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <title>Pro Vets | Consultas</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body class="bg-[#0f172a] text-slate-200 min-h-screen p-6 md:p-12">
+
+<div class="container mx-auto">
+    <div class="flex justify-end mb-6 items-center gap-4 text-sm">
+            <span class="text-slate-400 italic">
+                Bienvenido, <span class="text-orange-400 font-bold" sec:authentication="name">Usuario</span>
+            </span>
+        <form th:action="@{/logout}" method="post">
+            <button type="submit" class="bg-red-500/10 hover:bg-red-500/20 text-red-400 border border-red-500/30 px-3 py-1 rounded-lg transition-all text-xs">
+                <i class="fas fa-power-off mr-1"></i> Cerrar Sesión
+            </button>
+        </form>
+    </div>
+
+    <div class="flex flex-col md:flex-row justify-between items-center mb-10 gap-4">
+        <div>
+            <h1 class="text-4xl font-extrabold text-white tracking-tight">Registro de <span class="text-orange-500">Consultas</span></h1>
+            <p class="text-slate-400 mt-1">Control cronológico de atenciones médicas.</p>
+        </div>
+        <a th:href="@{/citas/nuevo}" class="bg-orange-500 hover:bg-orange-600 text-white font-bold py-2 px-6 rounded-xl transition-all shadow-lg shadow-orange-500/20">
+            <i class="fas fa-plus mr-2"></i> Nueva Cita
+        </a>
+    </div>
+
+    <div class="bg-slate-800/50 border border-slate-700 rounded-2xl overflow-hidden backdrop-blur-sm">
+        <table class="w-full text-left border-collapse">
+            <thead>
+            <tr class="bg-slate-700/50">
+                <th class="p-4 font-bold text-orange-400">ID</th>
+                <th class="p-4 font-bold text-orange-400">Fecha y Hora</th>
+                <th class="p-4 font-bold text-orange-400">Mascota</th>
+                <th class="p-4 font-bold text-orange-400">Veterinario</th>
+                <th class="p-4 font-bold text-orange-400">Motivo</th>
+                <th class="p-4 font-bold text-orange-400">Acciones</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="cita : ${citas}" class="border-t border-slate-700 hover:bg-slate-700/30 transition-colors">
+                <td class="p-4" th:text="${cita.id}">1</td>
+                <td class="p-4" th:text="${#temporals.format(cita.fechaHora, 'dd/MM/yyyy HH:mm')}">01/01/2025</td>
+                <td class="p-4">
+                    <span class="font-bold text-white" th:text="${cita.mascota.nombre}">Fido</span>
+                </td>
+                <td class="p-4" th:text="${cita.veterinario.nombre}">Dr. Pérez</td>
+                <td class="p-4 text-slate-400" th:text="${cita.motivo}">Chequeo general</td>
+                <td class="p-4">
+                    <div class="flex gap-2">
+                        <a th:href="@{/citas/editar/{id}(id=${cita.id})}" class="text-blue-400 hover:text-blue-300 transition-colors">
+                            <i class="fas fa-edit"></i>
+                        </a>
+                        <a th:href="@{/citas/eliminar/{id}(id=${cita.id})}"
+                           class="text-red-400 hover:text-red-300 transition-colors"
+                           onclick="return confirm('¿Estás seguro de eliminar esta cita?')">
+                            <i class="fas fa-trash"></i>
+                        </a>
+                    </div>
+                </td>
+            </tr>
+            <tr th:if="${#lists.isEmpty(citas)}">
+                <td colspan="6" class="p-10 text-center text-slate-500 italic">
+                    No hay consultas programadas actualmente.
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="mt-8">
+        <a th:href="@{/}" class="text-slate-400 hover:text-white transition-colors flex items-center gap-2">
+            <i class="fas fa-arrow-left"></i> Volver al Dashboard
+        </a>
+    </div>
+</div>
+
+</body>
+</html>

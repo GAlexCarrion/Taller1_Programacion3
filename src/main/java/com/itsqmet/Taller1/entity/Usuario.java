@@ -1,31 +1,22 @@
 package com.itsqmet.Taller1.entity;
 
-import jakarta.persistence.*;
-import jakarta.validation.constraints.*;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import java.util.List;
 
-@Entity
+import jakarta.persistence.*;
+import lombok.Data;
+
 @Data
-@NoArgsConstructor
+@Entity
+@Table(name = "usuarios")
 public class Usuario {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotBlank(message = "El nombre es obligatorio")
-    @Pattern(regexp = "^[a-zA-Z\\s]{3,50}$", message = "Solo letras (3-50 caracteres)")
-    private String nombre;
+    @Column(unique = true, nullable = false)
+    private String username;
 
-    @NotBlank(message = "La cédula es obligatoria")
-    @Pattern(regexp = "^[0-9]{10}$", message = "La cédula debe tener 10 dígitos")
-    private String cedula;
+    @Column(nullable = false)
+    private String password; // Se guardará encriptada con BCrypt
 
-    @NotBlank(message = "El correo es obligatorio")
-    @Email(message = "Correo inválido")
-    private String email;
-
-    @OneToMany(mappedBy = "usuario", fetch = FetchType.LAZY)
-    private List<Mascota> mascotas;
+    private String rol; // Ejemplo: "ADMIN"
 }

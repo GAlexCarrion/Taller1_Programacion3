@@ -1,10 +1,8 @@
 package com.itsqmet.Taller1.entity;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import java.util.List;
 
 @Entity
 @Data
@@ -14,17 +12,15 @@ public class Mascota {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotBlank(message = "Nombre obligatorio")
-    @Pattern(regexp = "^[a-zA-Z\\s]+$", message = "El nombre no puede tener números")
     private String nombre;
-
     private String especie;
-    private Integer edad;
+    private String raza;
+    private int edad;
 
+    // Relación: Muchas Mascotas pertenecen a un Cliente (Dueño)
     @ManyToOne
-    @JoinColumn(name = "usuario_id")
-    private Usuario usuario;
+    @JoinColumn(name = "cliente_id") // Cambiado para evitar la ñ
+    private Cliente cliente;
 
-    @OneToMany(mappedBy = "mascota", fetch = FetchType.LAZY)
-    private List<Cita> citas;
+    // Nota: Asegúrate de tener creada la clase Cliente.java
 }

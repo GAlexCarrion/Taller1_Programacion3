@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Registro - Tienda TechPro</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-slate-900 text-white flex items-center justify-center h-screen">
+<div class="bg-slate-800 p-8 rounded-xl shadow-2xl w-96 border border-slate-700">
+  <h2 class="text-3xl font-bold mb-2 text-center text-emerald-500">Registro</h2>
+  <p class="text-slate-400 text-center mb-6 text-sm">Gestión Administrativa</p>
+
+  <form th:action="@{/registro}" th:object="${usuario}" method="post" class="space-y-4">
+    <div>
+      <label class="block text-sm mb-1 text-slate-400">Nuevo Usuario</label>
+      <input type="text" th:field="*{username}" class="w-full p-2.5 rounded bg-slate-700 border border-slate-600 focus:ring-2 focus:ring-emerald-500 outline-none transition" placeholder="Nombre de usuario" required>
+    </div>
+    <div>
+      <label class="block text-sm mb-1 text-slate-400">Contraseña</label>
+      <input type="password" th:field="*{password}" class="w-full p-2.5 rounded bg-slate-700 border border-slate-600 focus:ring-2 focus:ring-emerald-500 outline-none transition" placeholder="••••••••" required>
+    </div>
+    <button type="submit" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-2.5 rounded transition duration-200">
+      Registrar Usuario
+    </button>
+  </form>
+
+  <div class="mt-6 text-center text-sm text-slate-400">
+    ¿Ya eres usuario?
+    <a th:href="@{/login}" class="text-emerald-400 hover:text-emerald-300 font-semibold ml-1">Regresar al Login</a>
+  </div>
+</div>
+</body>
+</html>
