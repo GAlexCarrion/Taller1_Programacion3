@@ -3,12 +3,12 @@ package com.itsqmet.Taller1.entity;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.ToString; // Añadir importación
+import lombok.ToString;
 
 @Entity
 @Data
 @NoArgsConstructor
-@ToString(exclude = "cliente") // <--- ESTO EVITA EL BUCLE CON EL DUEÑO
+@ToString(exclude = "cliente")
 public class Mascota {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

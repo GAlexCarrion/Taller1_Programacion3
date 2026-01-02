@@ -31,7 +31,6 @@ public class CitaController {
         return "cita/lista";
     }
 
-    // MOSTRAR FORMULARIO
     @GetMapping("/nuevo")
     public String formularioCita(Model model) {
         model.addAttribute("cita", new Cita());
@@ -48,7 +47,6 @@ public class CitaController {
         return "redirect:/citas";
     }
 
-    // EDITAR CITA EXISTENTE
     @GetMapping("/editar/{id}")
     public String editarCita(@PathVariable Long id, Model model) {
         Optional<Cita> citaOptional = citaService.buscarCitaPorId(id);
@@ -63,7 +61,6 @@ public class CitaController {
         }
     }
 
-    // ELIMINAR CITA
     @GetMapping("/eliminar/{id}")
     public String eliminarCita(@PathVariable Long id) {
         citaService.eliminarCita(id);

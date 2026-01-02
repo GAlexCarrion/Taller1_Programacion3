@@ -15,25 +15,23 @@ public class AuthController {
     @Autowired
     private UsuarioService usuarioService;
 
-    // Muestra la página de inicio de sesión
+    // Muestra la pgina de inicio
     @GetMapping("/login")
     public String login() {
         return "auth/login";
     }
 
-    // Prepara el formulario de registro enviando un objeto Usuario vacío
+    // Prepara el formulario de registro enviando un objeto usuario
     @GetMapping("/registro")
     public String registroForm(Model model) {
         model.addAttribute("usuario", new Usuario());
         return "auth/registro";
     }
 
-    // Recibe los datos del formulario, incluyendo el ROL seleccionado
+    // Recibe los datos del formulario, incluyendo el rol
     @PostMapping("/registro")
     public String registrarUsuario(@ModelAttribute Usuario usuario) {
-        // Delegamos la encriptación y el guardado al servicio
         usuarioService.registrar(usuario);
-        // Redirigimos al login con un mensaje de éxito
         return "redirect:/login?success";
     }
 }

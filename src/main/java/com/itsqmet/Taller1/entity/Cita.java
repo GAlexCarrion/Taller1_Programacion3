@@ -3,12 +3,12 @@ package com.itsqmet.Taller1.entity;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.ToString; // Importante añadir esta importación
+import lombok.ToString;
 
 @Entity
 @Data
 @NoArgsConstructor
-@ToString(exclude = {"mascota", "veterinario"}) // <--- ESTO SOLUCIONA EL ERROR
+@ToString(exclude = {"mascota", "veterinario"})
 public class Cita {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

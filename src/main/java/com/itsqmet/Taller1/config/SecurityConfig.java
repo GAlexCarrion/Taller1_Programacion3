@@ -15,7 +15,7 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests((requests) -> requests
-                        // 1. Rutas
+                        //Rutas
                         .requestMatchers("/registro", "/login", "/css/**", "/js/**").permitAll()
 
                         // 2. Reglas restrictivas de ELIMINAR (Solo ADMIN)
@@ -37,7 +37,7 @@ public class SecurityConfig {
                 )
                 .formLogin((form) -> form
                         .loginPage("/login")
-                        .defaultSuccessUrl("/", true) // Redirige a la raíz siempre tras éxito
+                        .defaultSuccessUrl("/", true)
                         .permitAll()
                 )
                 .logout((logout) -> logout

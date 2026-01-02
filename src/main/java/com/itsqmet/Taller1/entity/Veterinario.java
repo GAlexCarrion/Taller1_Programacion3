@@ -19,7 +19,7 @@ public class Veterinario {
     private String licencia;
     private String telefono;
 
-    // Relacion: Un Veterinario atiende muchas Citas
+    //relacion: un Veterinario atiende muchas Citas
     @OneToMany(mappedBy = "veterinario", cascade = CascadeType.ALL)
     private List<Cita> citas;
 }

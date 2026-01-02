@@ -3,13 +3,13 @@ package com.itsqmet.Taller1.entity;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.ToString; // Añadir esta importación
+import lombok.ToString;
 import java.util.List;
 
 @Entity
 @Data
 @NoArgsConstructor
-@ToString(exclude = "mascotas") // <--- VITAL: Rompe el bucle con la lista de mascotas
+@ToString(exclude = "mascotas")
 public class Cliente {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -21,7 +21,6 @@ public class Cliente {
     private String telefono;
     private String correo;
 
-    // Relación: Un Cliente tiene muchas mascotas
     @OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL)
     private List<Mascota> mascotas;
 }

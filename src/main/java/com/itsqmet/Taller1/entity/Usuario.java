@@ -15,11 +15,9 @@ public class Usuario {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    // Nombre de usuario único (usualmente el correo electrónico para el login)
     @Column(unique = true, nullable = false)
     private String username;
 
-    // Contraseña que se almacenará encriptada mediante BCryptPasswordEncoder
     @Column(nullable = false)
     private String password;
 
