@@ -38,7 +38,42 @@
 
     <div class="bg-[#1e293b] rounded-3xl overflow-hidden shadow-2xl border border-slate-800">
         <table class="w-full text-left border-collapse">
+
+
+            <thead class="bg-slate-800/50 text-purple-400">
+            <tr>
+                <th class="px-6 py-4 text-xs font-bold uppercase tracking-wider">Médico</th>
+                <th class="px-6 py-4 text-xs font-bold uppercase tracking-wider">Especialidad</th>
+                <th class="px-6 py-4 text-xs font-bold uppercase tracking-wider">Teléfono</th>
+                <th class="px-6 py-4 text-xs font-bold uppercase tracking-wider text-center">Acciones</th>
+            </tr>
+            </thead>
+            <tbody class="divide-y divide-slate-800">
+            <tr th:each="v : ${veterinarios}" class="hover:bg-purple-500/5 transition-colors">
+                <td class="px-6 py-4">
+                    <div class="flex items-center">
+                        <div class="w-10 h-10 rounded-full bg-purple-500/20 flex items-center justify-center mr-3">
+                            <i class="fas fa-user-md text-purple-500"></i>
+                        </div>
+                        <span class="font-bold text-white" th:text="${v.nombre} + ' ' + ${v.apellido}">Nombre</span>
+                    </div>
+                </td>
+                <td class="px-6 py-4 text-slate-400" th:text="${v.especialidad}">General</td>
+                <td class="px-6 py-4 text-slate-400 font-mono" th:text="${v.telefono}">000-000</td>
+                <td class="px-6 py-4">
+                    <div class="flex justify-center gap-2">
+                        <a th:href="@{/veterinarios/editar/{id}(id=${v.id})}" class="p-2 bg-blue-500/10 text-blue-400 hover:bg-blue-500 hover:text-white rounded-lg transition-all">
+                            <i class="fas fa-edit"></i>
+                        </a>
+                        <a sec:authorize="hasRole('ADMIN')" th:href="@{/veterinarios/eliminar/{id}(id=${v.id})}" onclick="return confirm('¿Eliminar médico?')" class="p-2 bg-red-500/10 text-red-500 hover:bg-red-500 hover:text-white rounded-lg transition-all">
+                            <i class="fas fa-trash"></i>
+                        </a>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
         </table>
+
     </div>
 </div>
 </body>
