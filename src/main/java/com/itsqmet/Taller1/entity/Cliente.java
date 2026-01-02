@@ -3,11 +3,13 @@ package com.itsqmet.Taller1.entity;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString; // Añadir esta importación
 import java.util.List;
 
 @Entity
 @Data
 @NoArgsConstructor
+@ToString(exclude = "mascotas") // <--- VITAL: Rompe el bucle con la lista de mascotas
 public class Cliente {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

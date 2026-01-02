@@ -3,10 +3,12 @@ package com.itsqmet.Taller1.entity;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString; // Añadir importación
 
 @Entity
 @Data
 @NoArgsConstructor
+@ToString(exclude = "cliente") // <--- ESTO EVITA EL BUCLE CON EL DUEÑO
 public class Mascota {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -17,9 +19,7 @@ public class Mascota {
     private String raza;
     private int edad;
 
-    // Relacion: Muchas Mascotas pertenecen a un Cliente
     @ManyToOne
     @JoinColumn(name = "cliente_id")
     private Cliente cliente;
-
 }

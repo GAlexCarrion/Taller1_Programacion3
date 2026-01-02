@@ -15,31 +15,37 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests((requests) -> requests
-                        // 1. Rutas públicas
+                        // 1. Rutas
                         .requestMatchers("/registro", "/login", "/css/**", "/js/**").permitAll()
 
-                        // 2. Seguridad para CLIENTES
-                        .requestMatchers("/clientes/eliminar/**").hasRole("ADMIN")
-                        .requestMatchers("/clientes/nuevo", "/clientes/editar/**", "/clientes/guardar").hasAnyRole("ADMIN", "USER")
+                        // 2. Reglas restrictivas de ELIMINAR (Solo ADMIN)
+                        // Se especifican las rutas una por una para evitar el error de comodines
+                        .requestMatchers("/clientes/eliminar/**", "/mascotas/eliminar/**",
+                                "/veterinarios/eliminar/**", "/citas/eliminar/**").hasRole("ADMIN")
 
-                        // 3. Seguridad para CITAS
-                        .requestMatchers("/citas/eliminar/**").hasRole("ADMIN")
-                        .requestMatchers("/citas/nuevo", "/citas/editar/**", "/citas/guardar").hasAnyRole("ADMIN", "USER")
+                        // 3. Reglas de CREAR y EDITAR (ADMIN y VETERINARIO)
+                        .requestMatchers("/clientes/nuevo", "/clientes/editar/**", "/clientes/guardar").hasAnyRole("ADMIN", "VETERINARIO")
+                        .requestMatchers("/mascotas/nuevo", "/mascotas/editar/**", "/mascotas/guardar").hasAnyRole("ADMIN", "VETERINARIO")
+                        .requestMatchers("/veterinarios/nuevo", "/veterinarios/editar/**", "/veterinarios/guardar").hasAnyRole("ADMIN", "VETERINARIO")
+                        .requestMatchers("/citas/nuevo", "/citas/editar/**", "/citas/guardar").hasAnyRole("ADMIN", "VETERINARIO")
 
-                        // 4. Todo lo demás requiere login
+                        // 4. Vistas de consulta: Permitidas para los 3 ROLES
+                        .requestMatchers("/", "/clientes", "/mascotas", "/veterinarios", "/citas").hasAnyRole("ADMIN", "VETERINARIO", "CLIENTE")
+
+                        // Cualquier otra ruta requiere estar autenticado
                         .anyRequest().authenticated()
                 )
                 .formLogin((form) -> form
                         .loginPage("/login")
-                        .defaultSuccessUrl("/", true)
+                        .defaultSuccessUrl("/", true) // Redirige a la raíz siempre tras éxito
                         .permitAll()
                 )
                 .logout((logout) -> logout
                         .logoutSuccessUrl("/login?logout")
+                        .invalidateHttpSession(true)
+                        .deleteCookies("JSESSIONID")
                         .permitAll()
                 );
-
-        // Eliminamos el exceptionHandling para no requerir la página 403.html
 
         return http.build();
     }
